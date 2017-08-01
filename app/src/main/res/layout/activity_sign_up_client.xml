@@ -14,7 +14,7 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/designer"
+        <ImageView android:src="@drawable/client"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginBottom="24dp"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_username_designer"
+            <EditText android:id="@+id/input_username_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email_designer"
+            <EditText android:id="@+id/input_email_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password_designer"
+            <EditText android:id="@+id/input_password_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_reEnterPassword_designer"
+            <EditText android:id="@+id/input_reEnterPassword_client"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -86,8 +86,8 @@
             android:background="@color/jet"
             android:textColor="@color/accent"
             android:text="Create Account"
-            android:textStyle="bold"
-            android:onClick="signUpDesigner"/>
+            android:onClick="signUpClient"
+            android:textStyle="bold"/>
 
         <TextView android:id="@+id/link_login"
             android:layout_width="fill_parent"

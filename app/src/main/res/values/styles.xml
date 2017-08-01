@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/jet</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:colorBackground">@color/primary</item>
+        <item name="android:windowBackground">?attr/colorPrimary</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -26,5 +27,9 @@
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/primary</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

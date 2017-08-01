@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#0fb085</color>
+    <color name="primary">#26a69a</color>
     <color name="primary_dark">#E12929</color>
     <color name="primary_darker">#CC1D1D</color>
     <color name="accent">#ffffff</color>
 
     <color name="black">#000000</color>
-    <color name="jet">#096a44</color>
+    <color name="jet">#00695c</color>
     <color name="oil">#333333</color>
     <color name="monsoon">#777777</color>
     <color name="jumbo">#888888</color>

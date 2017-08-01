@@ -19,7 +19,9 @@
         <activity
             android:name=".Signup"
             android:label="SignUp" />
-        <activity android:name=".chooseSignUp"></activity>
+        <activity android:name=".chooseSignUp" />
+        <activity android:name=".ProfilePageClient" />
+        <activity android:name=".SignUpClient"></activity>
     </application>
 
 </manifest>

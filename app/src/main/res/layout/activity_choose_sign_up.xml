@@ -34,7 +34,8 @@
             android:padding="12dp"
             android:textColor="@color/accent"
             android:background="@color/jet"
-            android:text="As Client"/>
+            android:text="As Client"
+            android:onClick="asClient"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/as_fashion_designer"
@@ -46,7 +47,7 @@
             android:background="@color/jet"
             android:textColor="@color/accent"
             android:text="As Fashion Designer"
-            android:onClick="asClient"/>
+            android:onClick="asDesigner"/>
 
 
 

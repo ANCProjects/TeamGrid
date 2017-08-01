@@ -13,13 +13,13 @@ public class chooseSignUp extends AppCompatActivity {
         setContentView(R.layout.activity_choose_sign_up);
     }
 
-    public void asClient (View view){
+    public void asDesigner (View view){
         Intent client_signup = new Intent(this, Signup.class);
         startActivity(client_signup);
     }
 
-    public void login (View view){
-        Intent client_signup = new Intent(this, MainActivity.class);
+    public void asClient (View view){
+        Intent client_signup = new Intent(this, SignUpClient.class);
         startActivity(client_signup);
     }
 }

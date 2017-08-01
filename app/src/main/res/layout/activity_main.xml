@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="56dp"
+        android:layout_gravity="center_vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
@@ -64,7 +65,8 @@
             android:padding="12dp"
             android:background="@color/jet"
             android:textColor="@color/accent"
-            android:text="Login"/>
+            android:text="Login"
+            android:onClick="login"/>
 
 
 
