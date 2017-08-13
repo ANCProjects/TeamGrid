@@ -6,24 +6,37 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class SignUpClient extends AppCompatActivity {
+
+public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_client);
+        setContentView(R.layout.activity_home);
+
+        TextView guestLogin = (TextView) findViewById(R.id.guest);
+
+        guestLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Intent intent=new Intent(this, ProfileActivity.class);
+                startActivity(new Intent(HomeActivity.this, ProfilePageClient.class));
+            }
+
+        });
+
     }
 
-    public void signUpClient(View v) {
-        final EditText emailValidate = (EditText) findViewById(R.id.input_email_client);
-        final EditText passwordValidate = (EditText) findViewById(R.id.input_password_client);
-        final EditText reEnterPasswordValidate = (EditText) findViewById(R.id.input_reEnterPassword_client);
+    public void login(View v) {
+
+        final EditText emailValidate = (EditText) findViewById(R.id.input_email);
+        final EditText passwordValidate = (EditText) findViewById(R.id.input_password);
 
         String email = emailValidate.getText().toString().trim();
         String password = passwordValidate.getText().toString();
-        String reEnterPassword = reEnterPasswordValidate.getText().toString();
 
         if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailValidate.setError("Enter a Valid Email Address");
@@ -41,15 +54,11 @@ public class SignUpClient extends AppCompatActivity {
             passwordValidate.setError(null);
         }
 
-        if (reEnterPassword.isEmpty() || reEnterPassword != password) {
-            reEnterPasswordValidate.setError("password do not match");
-        } else {
-            passwordValidate.setError(null);
-        }
     }
 
-    public void login(View v) {
-        Intent Login = new Intent(this, HomeActivity.class);
-        startActivity(Login);
+
+    public void sign_up(View view) {
+        Intent signup = new Intent(this, chooseSignUp.class);
+        startActivity(signup);
     }
 }

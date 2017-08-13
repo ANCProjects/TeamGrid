@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FashHub.iml" filepath="$PROJECT_DIR$/FashHub.iml" />
+      <module fileurl="file://C:\Users\Iretioluwa\AndroidStudioProjects\TeamGrid\FashHub.iml" filepath="C:\Users\Iretioluwa\AndroidStudioProjects\TeamGrid\FashHub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TeamGrid.iml" filepath="$PROJECT_DIR$/.idea/TeamGrid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Iretioluwa\AndroidStudioProjects\TeamGrid\app\app.iml" filepath="C:\Users\Iretioluwa\AndroidStudioProjects\TeamGrid\app\app.iml" />
     </modules>
   </component>
 </project>

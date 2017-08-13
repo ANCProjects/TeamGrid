@@ -49,7 +49,7 @@ public class Signup extends AppCompatActivity {
     }
 
     public void login (View v){
-        Intent Login = new Intent(this, MainActivity.class);
+        Intent Login = new Intent(this, HomeActivity.class);
         startActivity(Login);
     }
 }
