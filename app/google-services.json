@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1073669931480",
+    "firebase_url": "https://fashhub-f8715.firebaseio.com",
+    "project_id": "fashhub-f8715",
+    "storage_bucket": "fashhub-f8715.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073669931480:android:73b4813f7bd1f5b9",
+        "android_client_info": {
+          "package_name": "com.teamgrid.fashhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073669931480-gucvtoip7vcbf14mtnc65ppf0ro6735q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYL6iARLL7p-ZwVc5xQpEcAiaO_sS_cUM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

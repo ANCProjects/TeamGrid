@@ -41,8 +41,6 @@
 
 
         <!--  Password Label -->
-
-
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,7 +62,6 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:background="@color/jet"
-            android:onClick="login"
             android:padding="12dp"
             android:text="Login"
             android:textColor="@color/accent" />
@@ -76,7 +73,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:onClick="sign_up"
             android:text="No account yet? SignUp"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -87,7 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:gravity="center"
-            android:onClick="sign_up"
             android:text="Login as Guest"
             android:textColor="@color/white"
             android:textSize="16sp" />
