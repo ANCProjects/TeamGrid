@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/primary"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:paddingTop="56dp" android:paddingLeft="24dp" android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/designer"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:layout_marginBottom="24dp"
-            android:layout_gravity="center_horizontal" />
+        <ImageView
+            android:id="@+id/topImg"
+            android:layout_width="wrap_content" android:layout_height="100dp"
+            android:layout_marginBottom="24dp"  android:layout_gravity="center_horizontal" />
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
@@ -26,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_username_designer"
+            <EditText android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
@@ -40,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_email_designer"
+            <EditText android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -50,12 +42,11 @@
 
         <!-- Password Label -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/passwordwrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_password_designer"
+            <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -68,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/input_reEnterPassword_designer"
+            <EditText android:id="@+id/input_reEnterPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -78,7 +69,7 @@
         <!-- Signup Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
@@ -86,19 +77,16 @@
             android:background="@color/jet"
             android:textColor="@color/accent"
             android:text="Create Account"
-            android:textStyle="bold"
-            android:onClick="signUpDesigner"/>
+            android:textStyle="bold"/>
 
         <TextView android:id="@+id/link_login"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:text="Already a member? Login"
             android:gravity="center"
             android:textSize="16dip"
-            android:onClick="login"
             android:textColor="@color/accent"
             />
-
     </LinearLayout>
 </ScrollView>

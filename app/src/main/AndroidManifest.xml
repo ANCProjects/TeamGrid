@@ -14,19 +14,11 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".Signup"
-            android:label="SignUp" />
-        <activity android:name=".chooseSignUp" />
-        <activity android:name=".ProfilePageClient" />
-        <activity android:name=".SignUpClient" />
-
-        <activity
-            android:name=".HomeActivity"
+            android:name=".SignIn"
             android:label="Home"
             android:parentActivityName=".MainActivity">
             <!--Enable up button in the Action bar-->
@@ -34,6 +26,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+        <activity android:name=".SignUp" />
+        <activity android:name=".ChooseSignUp" />
+        <activity android:name=".ProfilePageClient" />
+
     </application>
 
 </manifest>

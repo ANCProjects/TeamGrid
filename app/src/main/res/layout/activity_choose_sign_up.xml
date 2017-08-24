@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/primary">
 
@@ -11,11 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
-        android:layout_gravity="center_vertical"
-        >
-
-
-
+        android:layout_gravity="center_vertical">
 
         <ImageView
             android:src="@drawable/signup"
@@ -24,32 +20,26 @@
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
-
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/asClient"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:textColor="@color/accent"
             android:background="@color/jet"
-            android:text="As Client"
-            android:onClick="asClient"/>
+            android:text="As Client" />
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/as_fashion_designer"
-            android:layout_width="fill_parent"
+            android:id="@+id/asDesigner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:background="@color/jet"
             android:textColor="@color/accent"
-            android:text="As Fashion Designer"
-            android:onClick="asDesigner"/>
-
-
-
+            android:text="As Fashion Designer" />
     </LinearLayout>
 </ScrollView>
