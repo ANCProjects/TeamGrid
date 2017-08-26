@@ -16,9 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,11 +25,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.teamgrid.fashhub.models.User;
 import com.teamgrid.fashhub.utils.Device;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignUp";
+    private static final String TAG = "SignUpActivity";
 
-    EditText usernameValidate, emailValidate, passwordValidate, reEnterPasswordValidate;
+    EditText emailValidate, passwordValidate, reEnterPasswordValidate;
     AppCompatButton btnSignUp;
     ImageView image;
     TextView login;
@@ -57,7 +55,6 @@ public class SignUp extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         image = (ImageView) findViewById(R.id.topImg);
-        usernameValidate = (EditText) findViewById(R.id.input_username);
         emailValidate = (EditText) findViewById(R.id.input_email);
         passwordValidate = (EditText) findViewById(R.id.input_password);
         reEnterPasswordValidate = (EditText) findViewById(R.id.input_reEnterPassword);
@@ -82,7 +79,7 @@ public class SignUp extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginpage = new Intent(SignUp.this, SignIn.class);
+                Intent loginpage = new Intent(SignUpActivity.this, SignInActivity.class);
                 loginpage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loginpage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginpage);
@@ -155,7 +152,6 @@ public class SignUp extends AppCompatActivity {
                               sendEmailVerification();
                               onAuthSuccess(user);
 
-                                usernameValidate.setText("");
                                 emailValidate.setText("");
                                 passwordValidate.setText("");
                                 reEnterPasswordValidate.setText("");
@@ -170,12 +166,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void onAuthSuccess(FirebaseUser user) {
-           String username;
-           username = usernameValidate.getText().toString().trim();
-           if(TextUtils.isEmpty(username)){
-             username = usernameFromEmail(user.getEmail());
-           }
-
+           String username = usernameFromEmail(user.getEmail());
            addNewUser(user.getUid(), username, user.getEmail(), userRole);
     }
 

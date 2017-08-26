@@ -22,7 +22,7 @@ public class ChooseSignUp extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Intent signup = new Intent(this, SignUp.class);
+        Intent signup = new Intent(this, SignUpActivity.class);
         if(v == client){
             signup.putExtra("user", "client");
         }else if(v == designer){
