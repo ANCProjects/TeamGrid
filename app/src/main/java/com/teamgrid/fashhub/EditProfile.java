@@ -5,12 +5,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,8 +22,23 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.teamgrid.fashhub.models.User;
+import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
 import java.io.ByteArrayOutputStream;
@@ -27,6 +46,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Johnbosco on 24-Aug-17.
@@ -38,50 +60,134 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
     private static final int IMAGE_GALLERY_REQUEST = 1;
     private static final int IMAGE_CAMERA_REQUEST = 2;
-    //File
-    private File filePathImageCamera;
-    //Firebase Database
-    DatabaseReference mFirebaseDatabaseReference;
-    //Firebase Storage
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+
+    private DatabaseReference mDatabaseRef;
+    private StorageReference mStorageRef;
+
     private String userChoosenTask;
-    CharSequence[] items = {"from Camera", "from Gallary", "cancel"};
+    CharSequence[] items = {"from Camera", "from Gallery", "cancel"};
     ImageView profilePic;
-    EditText nameField, addressField, phoneField,emailField,bioField;
+    EditText nameField, addressField, phoneField, emailField, bioField;
+    String name, address, phoneNo, email, aboutMe, gender;
     RadioButton rdMale, rdFemale;
     Button btnSave;
-    String user;
+    String folderName;
+    String fileName = "profile/profilePicture.png";
 
+    private static final String KEY_FILE_URI = "key_file_uri";
+    private static final String KEY_DOWNLOAD_URL = "key_download_url";
+    private Uri mDownloadUrl = null;
+    private Uri mFileUri = null;
+
+    @Override
+    public void onSaveInstanceState(Bundle out) {
+        out.putParcelable(KEY_FILE_URI, mFileUri);
+        out.putParcelable(KEY_DOWNLOAD_URL, mDownloadUrl);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        if(getIntent()!=null){
-            user = getIntent().getExtras().getString("user");
+        if (getIntent() != null) {
+            email = getIntent().getExtras().getString("user");
         }
 
         profilePic = (ImageView) findViewById(R.id.user_photo);
         profilePic.setOnClickListener(this);
         nameField = (EditText) findViewById(R.id.name);
+        nameField.setEnabled(false);
         addressField = (EditText) findViewById(R.id.address);
+        addressField.setEnabled(false);
         phoneField = (EditText) findViewById(R.id.phoneNo);
+        phoneField.setEnabled(false);
         emailField = (EditText) findViewById(R.id.email);
-        emailField.setText(user);
         emailField.setEnabled(false);
         bioField = (EditText) findViewById(R.id.bio);
+        bioField.setEnabled(false);
 
         rdMale = (RadioButton) findViewById(R.id.rb_male);
         rdMale.setOnClickListener(this);
         rdMale.setChecked(true);
+        gender = "MALE";
         rdFemale = (RadioButton) findViewById(R.id.rb_female);
         rdFemale.setOnClickListener(this);
         btnSave = (Button) findViewById(R.id.save_button);
         btnSave.setOnClickListener(this);
 
+        // Restore instance state
+        if (savedInstanceState != null) {
+            mFileUri = savedInstanceState.getParcelable(KEY_FILE_URI);
+            mDownloadUrl = savedInstanceState.getParcelable(KEY_DOWNLOAD_URL);
+        }
+
         //if() findViewById(R.id.bio_card).setVisibility(View.VISIBLE);
         //else findViewById(R.id.bio_card).setVisibility(View.VISIBLE);
+
+
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(Constants.URL_STORAGE_REFERENCE);
+        folderName = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        if (mStorageRef != null) {
+            getUserDetails();
+        }
+    }
+
+    private void getUserDetails() {
+        StorageReference profilePhotoRef = mStorageRef.child(Constants.FOLDER_STORAGE_PHOTO).child(folderName).child(fileName);
+        profilePhotoRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        mDownloadUrl = uri;
+                        Glide.with(getBaseContext()).load(uri)
+                                .crossFade()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .error(R.drawable.ic_person_white_36dp)
+                                .into(profilePic);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle any errors
+                    }
+                });
+
+        DatabaseReference userDetailsRef = mDatabaseRef.child(Constants.FOLDER_DATABASE_USER).child(folderName);
+        userDetailsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                nameField.setText(user.name);
+                addressField.setText(user.address);
+                phoneField.setText(user.phone);
+                emailField.setText(user.email);
+                bioField.setText(user.bio);
+                if(user.gender==null){
+                    rdMale.setClickable(true);
+                    rdFemale.setClickable(true);
+                }else{
+                    if(user.gender.equalsIgnoreCase("MALE")){
+                        rdMale.setChecked(true);
+                        rdFemale.setChecked(false);
+                    }else if(user.gender.equalsIgnoreCase("FEMALE")){
+                        rdFemale.setChecked(true);
+                        rdFemale.setChecked(false);
+                    }
+
+                    rdMale.setClickable(false);
+                    rdFemale.setClickable(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                //  System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
     }
 
     @Override
@@ -91,9 +197,11 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         }else if(v==btnSave){
             sendToFirebase();
         }else if(v==rdMale){
+            gender="MALE";
             rdMale.setChecked(true);
             rdFemale.setChecked(false);
         }else if(v==rdFemale){
+            gender="FEMALE";
             rdFemale.setChecked(true);
             rdMale.setChecked(false);
         }
@@ -111,14 +219,60 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
                 Device.hideKeyboard(this);
 
-                Toast.makeText(this, "Still working on it, TeamGrid", Toast.LENGTH_LONG).show();
+                if (mStorageRef != null) {
+                    StorageReference profilePhotoRef = mStorageRef.child(Constants.FOLDER_STORAGE_PHOTO).child(folderName).child(fileName);
+                    UploadTask uploadTask = profilePhotoRef.putFile(mFileUri);
+                    uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                         //   System.out.println(taskSnapshot.getBytesTransferred());
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                Device.dismissProgressDialog();
+                            Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                            //FileModel fileModel = new FileModel("img",downloadUrl.toString(),name,"");
+                            //ChatModel chatModel = new ChatModel(user,Calendar.getInstance().getTime().getTime()+"",fileModel);
+                            //mFirebaseDatabaseReference.child(CHAT_REFERENCE).push().setValue(chatModel);
+                            updateUser();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getBaseContext(), "failed", Toast.LENGTH_LONG).show();
+                            Device.dismissProgressDialog();
+                        }
+                    });
+                }else{
+                    Device.dismissProgressDialog();
+                }
             }
         }
-
     }
 
+    private void updateUser(){
+        Map<String, Object> userUpdates = new HashMap<String, Object>();
+        userUpdates.put("name", name);
+        userUpdates.put("address", address);
+        userUpdates.put("phone", phoneNo);
+        userUpdates.put("gender", gender);
+        userUpdates.put("bio", aboutMe);
+        mDatabaseRef.child(Constants.FOLDER_DATABASE_USER).child(folderName).updateChildren(userUpdates);
+        Device.dismissProgressDialog();
+  /*
+        , new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                if (databaseError != null) {
+                    Toast.makeText(getBaseContext(), "Failed to save data", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Successfully saved data", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+*/
+    }
 
     private void getImageFrom() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -160,7 +314,14 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
     }
 
     private void photoCameraIntent(){
+        //String namePhoto = DateFormat.format("yyyy-MM-dd_hhmmss", new Date()).toString();
+        //filePathImageCamera = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), namePhoto+"camera.jpg");
+        //Uri photoURI = FileProvider.getUriForFile(this,
+         //       BuildConfig.APPLICATION_ID + ".provider",
+           //     filePathImageCamera);
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
         startActivityForResult(intent, IMAGE_CAMERA_REQUEST);
     }
 
@@ -176,13 +337,16 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == IMAGE_GALLERY_REQUEST)
-                onSelectFromGalleryResult(data);
-            else if (requestCode == IMAGE_CAMERA_REQUEST)
-                onCaptureImageResult(data);
+            if (requestCode == IMAGE_GALLERY_REQUEST) {
+                mFileUri = data.getData();
+                if (mFileUri != null) onSelectFromGalleryResult(data);
+            }
+            else if (requestCode == IMAGE_CAMERA_REQUEST) {
+                mFileUri = data.getData();
+                if (mFileUri != null) onCaptureImageResult(data);
+            }
         }
     }
-
 
 
     private void onCaptureImageResult(Intent data) {
@@ -226,7 +390,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
    private boolean validateForm() {
         boolean valid = true;
 
-        String name = nameField.getText().toString().trim();
+        name = nameField.getText().toString().trim();
         if (TextUtils.isEmpty(name)) {
             nameField.setError("Enter a name");
             Toast.makeText(getApplicationContext(), "Enter a name", Toast.LENGTH_SHORT).show();
@@ -235,7 +399,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             nameField.setError(null);
         }
 
-       String address = addressField.getText().toString().trim();
+        address = addressField.getText().toString().trim();
         if (TextUtils.isEmpty(address) || address.length() < 10 || address.length() > 100) {
             addressField.setError("Enter a valid address");
             valid = false;
@@ -243,20 +407,25 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             addressField.setError(null);
         }
 
-       String phoneNo = phoneField.getText().toString().trim();
+       phoneNo = phoneField.getText().toString().trim();
        if (TextUtils.isEmpty(phoneNo) || phoneNo.length() < 11 || phoneNo.length() > 13) {
            phoneField.setError("Enter a valid phone number");
            valid = false;
        } else {
            phoneField.setError(null);
        }
-
-       String aboutMe = bioField.getText().toString().trim();
+       aboutMe = bioField.getText().toString().trim();
        if (TextUtils.isEmpty(aboutMe)) {
            bioField.setError("Say something about your business");
            valid = false;
        } else {
            bioField.setError(null);
+       }
+
+       if (mFileUri == null || mDownloadUrl == null) {
+           Toast.makeText(this,"No photo file", Toast.LENGTH_LONG).show();
+           valid = false;
+       } else {
        }
 
        return valid;

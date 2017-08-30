@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.teamgrid.fashhub.models.User;
+import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -179,10 +180,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addNewUser(String userId, String name, String email, String userRole) {
-        User user = new User(name, email, userRole);
-        mDatabase.child("users").child(userId).setValue(user);
+        User user = new User(name, null, null, email, null, null, false,  userRole);
+        mDatabase.child(Constants.FOLDER_DATABASE_USER).child(userId).setValue(user);
     }
-
 
     private void sendEmailVerification() {
         Device.messageProgressDialog("Sending verification mail");

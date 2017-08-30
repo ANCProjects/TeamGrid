@@ -50,7 +50,9 @@ dependencies {
     // compile('com.twitter.sdk.android:twitter:1.13.1@aar') {
     //     transitive = true;
     // }
-    compile files('libs/PhotoUtil.jar')
+
+    /*Image Processor*/
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

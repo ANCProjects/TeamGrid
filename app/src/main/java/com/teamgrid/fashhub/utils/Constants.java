@@ -5,9 +5,9 @@ package com.teamgrid.fashhub.utils;
  */
 
 public class Constants {
-    public static final String URL_STORAGE_REFERENCE = "gs://light-ab136.appspot.com";
-    public static final String FOLDER_STORAGE_IMG = "gallery";
-    private static final String PREFERENCES_FILE = "diliva_login";
-    private static final String PREFERENCES_SETTINGS_FILE = "diliva_settings";
+    public static final String URL_STORAGE_REFERENCE = "gs://fashhub-f8715.appspot.com";
+    public static final String FOLDER_STORAGE_PHOTO = "photo";
+    public static final String FOLDER_STORAGE_VIDEO = "video";
+    public static final String FOLDER_DATABASE_USER = "users";
     public static final String APP_NAME = "fashhub";
 }
