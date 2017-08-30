@@ -4,7 +4,14 @@
     tools:context="com.teamgrid.fashhub.ProfilepagedesignerActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:orderInCategory="1"
+        android:title="Edit"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/log_out"
+        android:title="Log Out"
+        app:showAsAction="never"
+        android:orderInCategory="2"/>
+
 </menu>
