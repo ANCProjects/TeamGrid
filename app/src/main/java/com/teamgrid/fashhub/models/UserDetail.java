@@ -1,9 +1,10 @@
 package com.teamgrid.fashhub.models;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+import java.io.Serializable;
 
 @IgnoreExtraProperties
-public class User {
+public class UserDetail implements Serializable {
 
     public String name;
     public String address;
@@ -13,13 +14,14 @@ public class User {
     public String role;
     public String bio;
     public Boolean isVerified;
+    public String avaterUrl;
 
-    public User() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    public UserDetail() {
+        // Default constructor required for calls to DataSnapshot.getValue(UserDetail.class)
     }
 
-    public User(String name, String address, String phone, String email,
-                String gender, String bio, Boolean isVerified, String role) {
+    public UserDetail(String name, String address, String phone, String email,
+                      String gender, String bio, Boolean isVerified, String role, String avaterUrl) {
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -28,6 +30,7 @@ public class User {
         this.email = email;
         this.isVerified = isVerified;
         this.role = role;
+        this.avaterUrl = avaterUrl;
     }
 
 }

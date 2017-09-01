@@ -15,9 +15,12 @@
 
 
     <string name="upload_success">Upload finished</string>
-    <string name="upload_failure">Upload failed</string>\
+    <string name="upload_failure">Upload failed</string>
 
     <string name="download_success">Download finished</string>
     <string name="download_failure">Download failure</string>
 
+
+    <string name="action_sign_out">Log out</string>
+    <string name="action_search">Search</string>
 </resources>

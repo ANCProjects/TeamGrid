@@ -90,6 +90,7 @@
                             android:textColor="@color/black" />
 
                         <ImageButton
+                            android:id="@+id/clickName"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
@@ -129,6 +130,7 @@
                             android:textColor="@color/black" />
 
                         <ImageButton
+                            android:id="@+id/clickAddress"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
@@ -169,6 +171,7 @@
                             android:textColor="@color/black" />
 
                         <ImageButton
+                            android:id="@+id/clickPhone"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="center"
@@ -261,14 +264,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="@dimen/spacing_medium"
-                        android:text="Tell us about your business"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/spacing_medium"
+                            android:text="Tell us about your business"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/clickBio"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="bottom"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_mode_edit_black_24dp"/>
+                    </RelativeLayout>
 
                     <EditText
                         android:id="@+id/bio"
@@ -281,6 +298,7 @@
                         android:layout_margin="10dp"
                         android:padding="10dp"
                         android:textColor="@color/black"/>
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

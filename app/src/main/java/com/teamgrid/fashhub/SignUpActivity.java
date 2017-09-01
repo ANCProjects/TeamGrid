@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.teamgrid.fashhub.models.User;
+import com.teamgrid.fashhub.models.UserDetail;
 import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
@@ -39,7 +39,6 @@ public class SignUpActivity extends AppCompatActivity {
     String userRole;
 
     private FirebaseAuth mFirebaseAuth;
-   // private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
 
     @Override
@@ -62,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if(getIntent()!=null){
             userRole = getIntent().getExtras().getString("user");
-            if(userRole.equals("client"))
+            if(userRole.equalsIgnoreCase("client"))
                 image.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.client));
             else
                 image.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.designer));
@@ -86,37 +85,6 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(loginpage);
             }
         });
-
-/*
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-             // updateUI(user);
-            }
-        };
-*/
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-     //   mFirebaseAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-     //   if (mAuthListener != null) {
-     //       mFirebaseAuth.removeAuthStateListener(mAuthListener);
-     //   }
     }
 
     public void signUpClient() {
@@ -133,9 +101,6 @@ public class SignUpActivity extends AppCompatActivity {
 
                 Device.hideKeyboard(this);
 
-              // AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-              //  Toast.makeText(getApplicationContext(),credential.toString(),Toast.LENGTH_LONG).show();
-
                 mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -143,19 +108,21 @@ public class SignUpActivity extends AppCompatActivity {
 
                             if (!task.isSuccessful()) {
                               if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                   Toast.makeText(getApplicationContext(), "User with this email already exist.", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(getApplicationContext(), "UserDetail with this email already exist.", Toast.LENGTH_LONG).show();
                                  } else {
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                  }
                                 Device.dismissProgressDialog();
                             } else {
-                              final FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                              sendEmailVerification();
-                              onAuthSuccess(user);
 
+                                final FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                                sendEmailVerification();
+                                onAuthSuccess(user);
                                 emailValidate.setText("");
                                 passwordValidate.setText("");
                                 reEnterPasswordValidate.setText("");
+
+
                             }
                         }
                     });
@@ -180,8 +147,14 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addNewUser(String userId, String name, String email, String userRole) {
-        User user = new User(name, null, null, email, null, null, false,  userRole);
-        mDatabase.child(Constants.FOLDER_DATABASE_USER).child(userId).setValue(user);
+        UserDetail userDetail = new UserDetail(name, null, null, email, null, null, false,userRole,null);
+        mDatabase.child(Constants.FOLDER_DATABASE_USERDETAILS).child(userId).setValue(userDetail);
+
+        if(userRole.equalsIgnoreCase("client")){
+            mDatabase.child(Constants.FOLDER_DATABASE_CLIENT).push().setValue(userId);
+        }else{
+            mDatabase.child(Constants.FOLDER_DATABASE_DESIGNER).push().setValue(userId);
+        }
     }
 
     private void sendEmailVerification() {
