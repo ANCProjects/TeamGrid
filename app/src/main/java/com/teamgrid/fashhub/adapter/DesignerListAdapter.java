@@ -29,10 +29,12 @@ public class DesignerListAdapter extends RecyclerView.Adapter<DesignerListAdapte
     private List<UserDetail> items = new ArrayList();
     private List<UserDetail> filterItems = new ArrayList();
     private ItemFilter itemFilter = new ItemFilter();
+    private UserDetail currentUser;
 
-    public DesignerListAdapter(Context conxt, List<UserDetail> items) {
+    public DesignerListAdapter(Context conxt, List<UserDetail> items, UserDetail currentUser) {
         this.context = conxt;
         this.items = items;
+        this.currentUser = currentUser;
         this.filterItems = items;
     }
 
@@ -46,11 +48,11 @@ public class DesignerListAdapter extends RecyclerView.Adapter<DesignerListAdapte
     @Override
     public void onBindViewHolder(DesignerViewHolder holder, int position) {
         UserDetail designerDetail = this.filterItems.get(position);
-        holder.name.setText(designerDetail.name);
-        holder.phone.setText(designerDetail.phone);
-        holder.gender.setText(designerDetail.gender);
-        if(designerDetail.avaterUrl!=null){
-            Glide.with(context).load(designerDetail.avaterUrl)
+        holder.name.setText(designerDetail.getName());
+        holder.phone.setText(designerDetail.getPhone());
+        holder.gender.setText(designerDetail.getGender());
+        if(designerDetail.getAvaterUrl()!=null){
+            Glide.with(context).load(designerDetail.getAvaterUrl())
                     .crossFade()
                     .thumbnail(0.5f)
                     .bitmapTransform(new CircleTransform(context))
@@ -78,7 +80,7 @@ public class DesignerListAdapter extends RecyclerView.Adapter<DesignerListAdapte
 
             List<String> list = new ArrayList();
             for(int i=0; i<items.size(); i++)
-                list.add(DesignerListAdapter.this.items.get(i).name);
+                list.add(DesignerListAdapter.this.items.get(i).getName());
 
             List<UserDetail> result_list = new ArrayList(list.size());
             for(int i=0; i<list.size(); i++){
@@ -122,6 +124,7 @@ public class DesignerListAdapter extends RecyclerView.Adapter<DesignerListAdapte
 
             Intent intent = new Intent(context, DesignerProfilePage.class);
             intent.putExtra("viewDesigner", designerClicked);
+            intent.putExtra("currentUser", currentUser);
             context.startActivity(intent);
         }
     }

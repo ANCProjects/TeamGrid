@@ -1,0 +1,76 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@null" >
+
+    <!-- android:background="@drawable/bubble_left" -->
+
+    <LinearLayout
+        android:gravity="start"
+        android:layout_marginLeft="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:padding="3dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Mr. Kola Bolu"
+            android:layout_margin="5dp"
+            android:layout_gravity="end"
+            android:textColor="@color/colorAccent"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:background="#000"
+                android:visibility="gone"
+                android:scaleType="fitCenter"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/message"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:textColor="@color/black"
+                android:text="hi"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/timestamp"
+                style="@android:style/TextAppearance.Medium"
+                android:padding="5dp"
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="09:30"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="end|bottom"
+                android:textSize="14sp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
