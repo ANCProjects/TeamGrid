@@ -2,9 +2,25 @@
     <string name="app_name">FashHub</string>
     <string name="title_activity_profilepagedesigner">ProfilepagedesignerActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="action_edit_profile">Edit Profile</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="prof_name">Full Name</string>
     <string name="wel">Welcome</string>
     <string name="star">Getting Started</string>
+
+    <string name="select_picture_title">Get Photo From</string>
+    <string name="progress_downloading">Downloading…</string>
+    <string name="progress_uploading">Uploading…</string>
+
+
+    <string name="upload_success">Upload finished</string>
+    <string name="upload_failure">Upload failed</string>
+
+    <string name="download_success">Download finished</string>
+    <string name="download_failure">Download failure</string>
+
+
+    <string name="action_sign_out">Log out</string>
+    <string name="action_search">Search</string>
 </resources>

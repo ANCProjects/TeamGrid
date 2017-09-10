@@ -16,22 +16,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.teamgrid.fashhub.models.User;
+import com.teamgrid.fashhub.models.UserDetail;
+import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private static final String TAG = "SignUp";
+    private static final String TAG = "SignUpActivity";
 
-    EditText usernameValidate, emailValidate, passwordValidate, reEnterPasswordValidate;
+    EditText emailValidate, passwordValidate, reEnterPasswordValidate;
     AppCompatButton btnSignUp;
     ImageView image;
     TextView login;
@@ -40,7 +39,6 @@ public class SignUp extends AppCompatActivity {
     String userRole;
 
     private FirebaseAuth mFirebaseAuth;
-   // private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabase;
 
     @Override
@@ -57,14 +55,13 @@ public class SignUp extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         image = (ImageView) findViewById(R.id.topImg);
-        usernameValidate = (EditText) findViewById(R.id.input_username);
         emailValidate = (EditText) findViewById(R.id.input_email);
         passwordValidate = (EditText) findViewById(R.id.input_password);
         reEnterPasswordValidate = (EditText) findViewById(R.id.input_reEnterPassword);
 
         if(getIntent()!=null){
             userRole = getIntent().getExtras().getString("user");
-            if(userRole.equals("client"))
+            if(userRole.equalsIgnoreCase("client"))
                 image.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.client));
             else
                 image.setImageDrawable(getApplicationContext().getResources().getDrawable(R.drawable.designer));
@@ -82,43 +79,12 @@ public class SignUp extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginpage = new Intent(SignUp.this, SignIn.class);
+                Intent loginpage = new Intent(SignUpActivity.this, SignInActivity.class);
                 loginpage.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loginpage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginpage);
             }
         });
-
-/*
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                } else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-             // updateUI(user);
-            }
-        };
-*/
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-     //   mFirebaseAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-     //   if (mAuthListener != null) {
-     //       mFirebaseAuth.removeAuthStateListener(mAuthListener);
-     //   }
     }
 
     public void signUpClient() {
@@ -135,9 +101,6 @@ public class SignUp extends AppCompatActivity {
 
                 Device.hideKeyboard(this);
 
-              // AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-              //  Toast.makeText(getApplicationContext(),credential.toString(),Toast.LENGTH_LONG).show();
-
                 mFirebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -145,20 +108,21 @@ public class SignUp extends AppCompatActivity {
 
                             if (!task.isSuccessful()) {
                               if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                   Toast.makeText(getApplicationContext(), "User with this email already exist.", Toast.LENGTH_LONG).show();
+                                   Toast.makeText(getApplicationContext(), "UserDetail with this email already exist.", Toast.LENGTH_LONG).show();
                                  } else {
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                  }
                                 Device.dismissProgressDialog();
                             } else {
-                              final FirebaseUser user = mFirebaseAuth.getCurrentUser();
-                              sendEmailVerification();
-                              onAuthSuccess(user);
 
-                                usernameValidate.setText("");
+                                final FirebaseUser user = mFirebaseAuth.getCurrentUser();
+                                sendEmailVerification();
+                                onAuthSuccess(user);
                                 emailValidate.setText("");
                                 passwordValidate.setText("");
                                 reEnterPasswordValidate.setText("");
+
+
                             }
                         }
                     });
@@ -170,12 +134,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void onAuthSuccess(FirebaseUser user) {
-           String username;
-           username = usernameValidate.getText().toString().trim();
-           if(TextUtils.isEmpty(username)){
-             username = usernameFromEmail(user.getEmail());
-           }
-
+           String username = usernameFromEmail(user.getEmail());
            addNewUser(user.getUid(), username, user.getEmail(), userRole);
     }
 
@@ -188,10 +147,15 @@ public class SignUp extends AppCompatActivity {
     }
 
     private void addNewUser(String userId, String name, String email, String userRole) {
-        User user = new User(name, email, userRole);
-        mDatabase.child("users").child(userId).setValue(user);
-    }
+        UserDetail userDetail = new UserDetail(name, null, null, email, null, null, false,userRole,null);
+        mDatabase.child(Constants.FOLDER_DATABASE_USERDETAILS).child(userId).setValue(userDetail);
 
+        if(userRole.equalsIgnoreCase("client")){
+            mDatabase.child(Constants.FOLDER_DATABASE_CLIENT).push().setValue(userId);
+        }else{
+            mDatabase.child(Constants.FOLDER_DATABASE_DESIGNER).push().setValue(userId);
+        }
+    }
 
     private void sendEmailVerification() {
         Device.messageProgressDialog("Sending verification mail");

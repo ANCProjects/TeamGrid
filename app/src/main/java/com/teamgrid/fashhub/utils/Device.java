@@ -1,11 +1,14 @@
 package com.teamgrid.fashhub.utils;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory.Options;
@@ -20,8 +23,11 @@ import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.appcompat.BuildConfig;
 import android.util.DisplayMetrics;
@@ -30,10 +36,47 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 
+import java.io.File;
 import java.util.HashMap;
 
 public class Device {
     private static ProgressDialog progressDialog;
+    public static final int REQUEST_EXTERNAL_STORAGE_PERMISSIONS = 1234;
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static boolean checkStoragePermission(final Context context)
+    {
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        if(currentAPIVersion>=android.os.Build.VERSION_CODES.M)
+        {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+                if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setTitle("Permission necessary");
+                    alertBuilder.setMessage("External storage permission is necessary");
+                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE_PERMISSIONS);
+                        }
+                    });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.show();
+
+                } else {
+                    ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_EXTERNAL_STORAGE_PERMISSIONS);
+                }
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
 
     public  static boolean isConnected(Context context) {
         NetworkInfo netInfo = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
@@ -105,6 +148,31 @@ public class Device {
                     public void onClick(DialogInterface dialogInterface, int i) {}
                 })
                 .create();
+    }
+
+
+    public static File isSavedInDrive(String url) {
+        File file = null;
+        File mDirectory = new File(Environment.getExternalStorageDirectory(), File.separator + Constants.APP_NAME);
+        if (!mDirectory.exists() && !mDirectory.mkdirs()) {
+            return null;
+        }
+        if (!(url == null || url.equals(BuildConfig.FLAVOR))) {
+            int lastIndexOfSlash = url.lastIndexOf("/");
+            if (lastIndexOfSlash > 0) {
+                String baseUrl = url.substring(0, lastIndexOfSlash);
+                String thumbnailUrl = url.substring(lastIndexOfSlash + 1);
+                if (!thumbnailUrl.isEmpty()) {
+                    int indexOfLastDot = thumbnailUrl.lastIndexOf(".");
+                    String nameOfFile = thumbnailUrl.substring(0, indexOfLastDot);
+                    File tempFile = new File(mDirectory.getAbsolutePath() + "/" + nameOfFile + thumbnailUrl.substring(indexOfLastDot));
+                    if (tempFile.exists()) {
+                        file = tempFile;
+                    }
+                }
+            }
+        }
+        return file;
     }
 
     public static Snackbar showSnackbar(final Context context, String content, Boolean indefinite) {

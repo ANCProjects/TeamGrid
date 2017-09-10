@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#26a69a</color>
-    <color name="primary_dark">#E12929</color>
-    <color name="primary_darker">#CC1D1D</color>
-    <color name="accent">#ffffff</color>
+    <color name="colorPrimary">#26a69a</color>
+    <color name="colorPrimaryDark">#00695c</color>
+    <color name="colorPrimaryDarker">#00695d</color>
+    <color name="colorAccent">#CC1D1D</color>
 
     <color name="black">#000000</color>
     <color name="jet">#00695c</color>
@@ -14,4 +14,8 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+    <color name="secondary_text">#757575</color>
+
+    <color name="text">#1d2cb1</color>
+
 </resources>

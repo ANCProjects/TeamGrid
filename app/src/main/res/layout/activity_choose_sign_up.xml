@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/primary">
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:orientation="vertical"
@@ -27,7 +27,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:padding="12dp"
-            android:textColor="@color/accent"
+            android:textColor="@color/white"
             android:background="@color/jet"
             android:text="As Client" />
 
@@ -39,7 +39,7 @@
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:background="@color/jet"
-            android:textColor="@color/accent"
+            android:textColor="@color/white"
             android:text="As Fashion Designer" />
     </LinearLayout>
 </ScrollView>

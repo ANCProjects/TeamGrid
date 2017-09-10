@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teamgrid.fashhub">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,15 +16,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignIn"
+            android:name=".SignInActivity"
             android:label="Home"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity">
             <!--Enable up button in the Action bar-->
             <meta-data
@@ -27,9 +33,11 @@
                 android:value=".MainActivity" />
         </activity>
 
-        <activity android:name=".SignUp" />
-        <activity android:name=".ChooseSignUp" />
-        <activity android:name=".ProfilePageClient" />
+        <activity android:name=".SignUpActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChooseSignUp" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DesignerProfilePage" />
+        <activity android:name=".DesignerListActivity"/>
+        <activity android:name=".EditProfile" android:theme="@style/AppTheme.EditProfile"/>
 
     </application>
 

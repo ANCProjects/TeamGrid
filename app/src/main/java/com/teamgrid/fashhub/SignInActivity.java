@@ -4,29 +4,51 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
-public class SignIn extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class SignInActivity extends AppCompatActivity implements
+        GoogleApiClient.OnConnectionFailedListener,
+        View.OnClickListener {
 
     EditText emailField, passwordField;
-    AppCompatButton btnLogin;
-    TextView tvSignUp, tvGuest;
     String email, password;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private GoogleApiClient mGoogleApiClient;
+    private CallbackManager mCallbackManager;
+    private DatabaseReference mDatabaseRef;
+
+    private static final int GOOGLE_SIGN_IN = 1;
+    private static final int FACEBOOK_SIGN_IN = 2;
+    private static final int TWITTER_SIGN_IN = 3;
+    Map<String, Object> userUpdates;
 
     @Override
     protected void onResume() {
@@ -36,36 +58,126 @@ public class SignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       // FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_signin);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
         emailField = (EditText) findViewById(R.id.input_email);
         passwordField = (EditText) findViewById(R.id.input_password);
-        btnLogin = (AppCompatButton) findViewById(R.id.btn_login);
-        tvSignUp = (TextView) findViewById(R.id.sign_up);
-        tvGuest = (TextView) findViewById(R.id.guest);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        findViewById(R.id.google_sign_in_button).setOnClickListener(this);
+        //findViewById(R.id.facebook_sign_in_button).setOnClickListener(this);
+        //findViewById(R.id.twitter_sign_in_button).setOnClickListener(this);
+        findViewById(R.id.sign_up).setOnClickListener(this);
+        findViewById(R.id.guest).setOnClickListener(this);
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.sign_in_button:
                 signIn();
-            }
-        });
-
-        tvSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.google_sign_in_button:
+                googleSignIn();
+                break;
+           // case R.id.facebook_sign_in_button:
+           //     break;
+           // case R.id.twitter_sign_in_button:
+           //     break;
+            case R.id.sign_up:
                 signUp();
-            }
-        });
-
-        tvGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.guest:
                 signInGuest();
+                break;
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+    }
+
+    private void googleSignIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == GOOGLE_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
+            Toast.makeText(getApplicationContext(), "Not activated yet", Toast.LENGTH_SHORT).show();
+
+            if (result.isSuccess()) {
+             //   Toast.makeText(getApplicationContext(), "result Success", Toast.LENGTH_SHORT).show();
+                // Google Sign In was successful, authenticate with Firebase
+             //   GoogleSignInAccount account = result.getSignInAccount();
+             //   firebaseAuthWithGoogle(account);
+            } else {
+         //       Toast.makeText(getApplicationContext(), "result failed.", Toast.LENGTH_SHORT).show();
+                // Google Sign In failed
+           }
+
+        }
+
+        // Result returned from launching the Intent from ;
+        else if (requestCode == FACEBOOK_SIGN_IN) {
+
+        }
+
+        // Result returned from launching the Intent from ;
+       else if (requestCode == TWITTER_SIGN_IN) {
+
+        }
+
+    }
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        if (Device.isConnected(this)) {
+            if (!Device.isProgressDialogShowing()) {
+                Device.showProgressDialog(this, false, "Please wait...");
+
+                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                if(credential != null){
+                    Toast.makeText(getApplicationContext(), acct.getIdToken(), Toast.LENGTH_SHORT).show();
+                }
+
+                mFirebaseAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Authentication successful.", Toast.LENGTH_SHORT).show();
+                                }
+                                Device.dismissProgressDialog();
+                            }
+                        });
             }
-        });
+        }else{
+            Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -112,7 +224,12 @@ public class SignIn extends AppCompatActivity {
                                                             if(user.isEmailVerified()){
                                                                 String authtoken = user.getUid();
 
-                                                                Intent Login = new Intent(SignIn.this, ProfilePageClient.class);
+                                                                 userUpdates = new HashMap<String, Object>();
+                                                                 userUpdates.put("isVerified", true);
+                                                                 mDatabaseRef.child(Constants.FOLDER_DATABASE_USERDETAILS)
+                                                                .child(user.getUid()).updateChildren(userUpdates);
+
+                                                                Intent Login = new Intent(SignInActivity.this, DesignerListActivity.class);
                                                                 Login.putExtra("user", user.getEmail());
                                                                 startActivity(Login);
                                                                 finish();
@@ -157,7 +274,7 @@ public class SignIn extends AppCompatActivity {
                                     final FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                     String authtoken = user.getUid();
 
-                                    Intent Login = new Intent(SignIn.this, ProfilePageClient.class);
+                                    Intent Login = new Intent(SignInActivity.this, DesignerListActivity.class);
                                     Login.putExtra("user", "Guest");
                                     startActivity(Login);
                                     finish();

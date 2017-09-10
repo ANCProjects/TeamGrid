@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout android:id="@+id/appbar_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar android:id="@+id/toolbar" android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="?attr/actionBarSize" app:popupTheme="@style/AppTheme.PopupOverlay">
+            <RelativeLayout android:gravity="top|bottom|center_vertical|fill_vertical|center|fill" android:paddingTop="8dp" android:paddingRight="8dp" android:paddingBottom="8dp" android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentLeft="true">
+                <ImageView android:id="@+id/backArrowBtn" android:layout_width="wrap_content" android:layout_height="match_parent"  android:layout_alignParentLeft="true" android:scaleType="center" android:src="@drawable/ic_chevron_left_white_36dp" />
+                <TextView android:id="@+id/toolbarTitle"  style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" android:text="@string/action_edit_profile" android:layout_centerInParent="true" android:layout_centerVertical="true" android:gravity="start|center|end|fill" android:layout_width="wrap_content" android:layout_height="wrap_content"  android:textColor="@color/white" android:ellipsize="end" android:focusable="false" android:maxLines="1" android:layout_gravity="center_vertical" />
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/spacing_large"
+                card_view:cardCornerRadius="@dimen/spacing_medium"
+                card_view:cardElevation="@dimen/spacing_xsmall"
+                card_view:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/user_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:background="#26a69a"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_touch_app_white_24dp" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/spacing_large"
+                android:padding="@dimen/spacing_medium"
+                card_view:cardCornerRadius="@dimen/spacing_medium"
+                card_view:cardElevation="@dimen/spacing_xsmall"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Name: "
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/name"
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black" />
+
+                        <ImageButton
+                            android:id="@+id/clickName"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_mode_edit_black_24dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Address: "
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/address"
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:inputType="textPersonName"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black" />
+
+                        <ImageButton
+                            android:id="@+id/clickAddress"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_mode_edit_black_24dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Phone No: "
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/phoneNo"
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:inputType="phone"
+                            android:maxLength="13"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black" />
+
+                        <ImageButton
+                            android:id="@+id/clickPhone"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_mode_edit_black_24dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Email: "
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/email"
+                            style="@android:style/TextAppearance.Medium"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:ellipsize="end"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1"
+                            android:padding="10dp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_marginLeft="@dimen/spacing_medium"
+                        android:layout_marginRight="@dimen/spacing_medium"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:gravity="top|bottom|center_vertical|fill_vertical|center|fill"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Gender: "
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/rb_male"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing_medium"
+                            android:layout_marginRight="@dimen/spacing_large"
+                            android:text="Male" />
+
+                        <RadioButton
+                            android:id="@+id/rb_female"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/spacing_medium"
+                            android:layout_marginRight="@dimen/spacing_medium"
+                            android:text="Female" />
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/bio_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/spacing_large"
+                android:padding="@dimen/spacing_medium"
+                card_view:cardCornerRadius="@dimen/spacing_medium"
+                card_view:cardElevation="@dimen/spacing_xsmall"
+                card_view:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/spacing_medium"
+                            android:text="Tell us about your business"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/clickBio"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="bottom"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_mode_edit_black_24dp"/>
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/bio"
+                        style="@android:style/TextAppearance.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_box"
+                        android:ellipsize="end"
+                        android:maxLines="5"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                android:background="#26a69a"
+                android:gravity="center"
+                android:text="SAVE"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
