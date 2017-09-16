@@ -64,13 +64,13 @@ public class ChatAdapter
     protected void populateViewHolder(ChatAdapterViewHolder viewHolder, Comment model, int position) {
         viewHolder.setTimestamp(model.getTimeStamp());
         if(model.getMessage()!= null){viewHolder.setMessage(model.getMessage());}
-        if(model.getFile()!=null){
-            if(model.getFile().getType().equalsIgnoreCase("img")){
-                viewHolder.setImage(model.getFile().getUrl_file());
-            }else if(model.getFile().getType().equalsIgnoreCase("video")){
+       // if(model.getFile()!=null){
+        //    if(model.getFile().getType().equalsIgnoreCase("img")){
+       //         viewHolder.setImage(model.getFile().getUrl_file());
+       //     }else if(model.getFile().getType().equalsIgnoreCase("video")){
 
-            }
-        }
+       //     }
+        //}
        // if(!model.getUser().getUid().equals(uid)){
        //     viewHolder.setAuthor(model.getUser().getName());
        // }
@@ -97,7 +97,7 @@ public class ChatAdapter
         }
 
         public void setTimestamp(String timestamp){
-           // tvTimestamp.setText(convertTimestamp(timestamp));
+            tvTimestamp.setText(convertTimestamp(timestamp));
         }
 
         public void setAuthor(String username) {

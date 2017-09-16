@@ -26,13 +26,14 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:text="Mr. Kola Bolu"
-            android:layout_margin="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
             android:layout_gravity="end"
             android:textColor="@color/colorAccent"
             android:textSize="14sp" />
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_margin="5dp">

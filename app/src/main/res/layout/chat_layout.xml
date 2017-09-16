@@ -21,20 +21,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_message"
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="Enter message"
             android:cursorVisible="true"
-            android:paddingLeft="10dp"
+            android:paddingLeft="5dp"
             android:background="@null"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
             android:padding="10dp"
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
@@ -42,10 +41,8 @@
 
         <Button
             android:id="@+id/btn_send"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@null"
             android:text="SEND"
             android:textStyle="bold"
             android:textSize="16sp"
