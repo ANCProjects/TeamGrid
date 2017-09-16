@@ -147,7 +147,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void addNewUser(String userId, String name, String email, String userRole) {
-        UserDetail userDetail = new UserDetail(name, null, null, email, null, null, false,userRole,null);
+        UserDetail userDetail = new UserDetail(name, null, email, userId, null, false, null, userRole, null, null);
         mDatabase.child(Constants.FOLDER_DATABASE_USERDETAILS).child(userId).setValue(userDetail);
 
         if(userRole.equalsIgnoreCase("client")){
@@ -188,8 +188,9 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         password = passwordValidate.getText().toString().trim();
-        if (TextUtils.isEmpty(password) || password.length() < 6 || password.length() > 10) {
-            passwordValidate.setError("between 6 and 10 characters");
+        if (TextUtils.isEmpty(password) || password.length() < 6) {
+            passwordValidate.setError("password should be 6 characters and above");
+            Toast.makeText(getApplicationContext(), "password should be 6 characters and above", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             passwordValidate.setError(null);
@@ -198,6 +199,7 @@ public class SignUpActivity extends AppCompatActivity {
         reEnterPassword = reEnterPasswordValidate.getText().toString().trim();
         if (TextUtils.isEmpty(reEnterPassword) || !reEnterPassword.equals(password)) {
             reEnterPasswordValidate.setError("password do not match");
+            Toast.makeText(getApplicationContext(), "password do not match", Toast.LENGTH_SHORT).show();
             valid = false;
         } else {
             passwordValidate.setError(null);

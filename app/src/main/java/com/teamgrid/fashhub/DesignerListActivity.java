@@ -38,7 +38,6 @@ public class DesignerListActivity extends AppCompatActivity {
     private ProgressBar progressbar;
     private RecyclerView recyclerView;
 
-    String user;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mDatabaseRef;
@@ -46,6 +45,7 @@ public class DesignerListActivity extends AppCompatActivity {
     ArrayList<String> designerId = new ArrayList<String>();
     ArrayList<UserDetail> designerDetails = new ArrayList<>();
     DesignerListAdapter adapter;
+    UserDetail currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class DesignerListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_designer_list);
 
         if(getIntent()!=null){
-            user = getIntent().getExtras().getString("user");
+            currentUser = (UserDetail) getIntent().getExtras().getSerializable("currentUser");
         }
 
         Device.dismissProgressDialog(this);
@@ -62,7 +62,6 @@ public class DesignerListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         recyclerView.setHasFixedSize(true);
 
-        //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child(Constants.FOLDER_DATABASE_DESIGNER);
 
@@ -153,7 +152,7 @@ public class DesignerListActivity extends AppCompatActivity {
 
 
     private void setupView(){
-        adapter = new DesignerListAdapter(getBaseContext(),designerDetails);
+        adapter = new DesignerListAdapter(getBaseContext(),designerDetails,currentUser);
         recyclerView.addItemDecoration(new NewSimpleDividerItemDecoration(getBaseContext()));
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -218,9 +217,9 @@ public class DesignerListActivity extends AppCompatActivity {
                 signOut();
                 break;
             case R.id.action_edit_profile:
-                if(!user.equalsIgnoreCase("Guest")){
+                if(!currentUser.getRole().equalsIgnoreCase("Guest")){
                     Intent edit = new Intent(this, EditProfile.class);
-                    edit.putExtra("user", user);
+                    edit.putExtra("user", currentUser.getEmail());
                     startActivity(edit);
                 }
              break;

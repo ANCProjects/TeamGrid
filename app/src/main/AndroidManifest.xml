@@ -37,6 +37,7 @@
         <activity android:name=".ChooseSignUp" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".DesignerProfilePage" />
         <activity android:name=".DesignerListActivity"/>
+        <activity android:name=".ChatActivity"/>
         <activity android:name=".EditProfile" android:theme="@style/AppTheme.EditProfile"/>
 
     </application>
