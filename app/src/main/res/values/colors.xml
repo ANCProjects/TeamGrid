@@ -23,4 +23,13 @@
     <color name="base">#AAAAAA</color>
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
+<<<<<<< HEAD
+=======
+    <color name="secondary_text">#757575</color>
+
+    <color name="text">#1d2cb1</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#727272</color>
+
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
 </resources>

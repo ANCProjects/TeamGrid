@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,4 +17,19 @@
          />
 
 
+=======
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/fashhub_home"
+        android:layout_centerInParent="true"
+        />
+
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
 </RelativeLayout>

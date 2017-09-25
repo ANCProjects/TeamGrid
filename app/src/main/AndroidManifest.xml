@@ -8,15 +8,20 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:parentActivityName="com.teamgrid.fashhub.MainActivity"
-        android:roundIcon="@mipmap/ic_launcher_round"
+         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity
             android:name=".MainActivity"
+=======
+
+        <activity android:name=".MainActivity"
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SignInActivity"
             android:label="Home"
@@ -41,6 +47,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+<<<<<<< HEAD
         <activity
             android:name=".SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -60,6 +67,17 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/MyMaterialTheme.base"></activity>
+=======
+
+        <activity android:name=".Home" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SignUpActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChooseSignUp" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".DesignerProfilePage" />
+        <activity android:name=".DesignerListActivity"/>
+        <activity android:name=".ChatActivity"/>
+        <activity android:name=".EditProfile" android:theme="@style/AppTheme.EditProfile"/>
+
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
     </application>
 
 </manifest>

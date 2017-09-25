@@ -36,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
                     MainActivity.this.finish();
                 }
             }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
         };
         splashTread.start();
     }

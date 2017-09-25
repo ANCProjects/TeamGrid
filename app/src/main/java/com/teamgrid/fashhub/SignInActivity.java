@@ -25,8 +25,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.teamgrid.fashhub.models.UserDetail;
 import com.teamgrid.fashhub.utils.Constants;
 import com.teamgrid.fashhub.utils.Device;
 
@@ -233,6 +237,7 @@ public class SignInActivity extends AppCompatActivity implements
                                                             if (user.isEmailVerified()) {
                                                                 String authtoken = user.getUid();
 
+<<<<<<< HEAD
                                                                 userUpdates = new HashMap<String, Object>();
                                                                 userUpdates.put("isVerified", true);
                                                                 mDatabaseRef.child(Constants.FOLDER_DATABASE_USERDETAILS)
@@ -243,6 +248,31 @@ public class SignInActivity extends AppCompatActivity implements
                                                                 startActivity(Login);
                                                                 finish();
                                                             } else {
+=======
+                                                             //    userUpdates = new HashMap<String, Object>();
+                                                             //    userUpdates.put("isVerified", true);
+                                                             //    mDatabaseRef.child(Constants.FOLDER_DATABASE_USERDETAILS)
+                                                             //   .child(user.getUid()).updateChildren(userUpdates);
+
+                                                                mDatabaseRef.child(Constants.FOLDER_DATABASE_USERDETAILS).child(user.getUid())
+                                                                        .addValueEventListener(new ValueEventListener() {
+                                                                    @Override
+                                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                        UserDetail userDetail = dataSnapshot.getValue(UserDetail.class);
+                                                                        Intent Login = new Intent(SignInActivity.this, Home.class);
+                                                                        Login.putExtra("currentUser", userDetail);
+                                                                        startActivity(Login);
+                                                                        finish();
+                                                                    }
+
+                                                                    @Override
+                                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                                    }
+                                                                });
+
+                                                            }else{
+>>>>>>> 52ea0d9ecabef25f57982a96966e92d02740edb1
                                                                 Toast.makeText(getApplicationContext(), "Please visit your mailbox to verify your account", Toast.LENGTH_SHORT).show();
                                                                 Device.dismissProgressDialog();
                                                             }
@@ -282,8 +312,8 @@ public class SignInActivity extends AppCompatActivity implements
                                     final FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                     String authtoken = user.getUid();
 
-                                    Intent Login = new Intent(SignInActivity.this, DesignerListActivity.class);
-                                    Login.putExtra("user", "Guest");
+                                    Intent Login = new Intent(SignInActivity.this, Home.class);
+                                    Login.putExtra("currentUser", new UserDetail("Anonymous","phone", "email", authtoken, "avaterUrl", false, "gender", "Guest", "address", "bio"));
                                     startActivity(Login);
                                     finish();
                                 }

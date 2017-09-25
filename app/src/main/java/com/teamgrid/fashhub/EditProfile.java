@@ -153,29 +153,29 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserDetail userDetail = dataSnapshot.getValue(UserDetail.class);
-                nameField.setText(userDetail.name);
-                addressField.setText(userDetail.address);
-                phoneField.setText(userDetail.phone);
-                emailField.setText(userDetail.email);
-                bioField.setText(userDetail.bio);
+                nameField.setText(userDetail.getName());
+                addressField.setText(userDetail.getAddress());
+                phoneField.setText(userDetail.getPhone());
+                emailField.setText(userDetail.getEmail());
+                bioField.setText(userDetail.getBio());
 
-                if(userDetail.avaterUrl!=null) {
-                    avaterUrl = userDetail.avaterUrl;
-                    Glide.with(getBaseContext()).load(userDetail.avaterUrl)
+                if(userDetail.getAvaterUrl()!=null) {
+                    avaterUrl = userDetail.getAvaterUrl();
+                    Glide.with(getBaseContext()).load(userDetail.getAvaterUrl())
                             .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .error(R.drawable.ic_person_white_36dp)
                             .into(profilePic);
                 }
-                if(userDetail.gender==null){
+                if(userDetail.getGender()==null){
                     rdMale.setClickable(true);
                     rdFemale.setClickable(true);
                 }else{
-                    if(userDetail.gender.equalsIgnoreCase("MALE")){
+                    if(userDetail.getGender().equalsIgnoreCase("MALE")){
                         gender="MALE";
                         rdMale.setChecked(true);
                         rdFemale.setChecked(false);
-                    }else if(userDetail.gender.equalsIgnoreCase("FEMALE")){
+                    }else if(userDetail.getGender().equalsIgnoreCase("FEMALE")){
                         gender="FEMALE";
                         rdFemale.setChecked(true);
                         rdFemale.setChecked(false);
@@ -272,7 +272,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
+    
     private void updateUser(){
         Map<String, Object> userUpdates = new HashMap<String, Object>();
         userUpdates.put("name", name);
