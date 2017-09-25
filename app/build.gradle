@@ -63,6 +63,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.20.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.github.medyo:android-about-page:1.2.1'
     testCompile 'junit:junit:4.12'
     compile files('libs/CircleImageView-master/gradle/wrapper/gradle-wrapper.jar')
 }
