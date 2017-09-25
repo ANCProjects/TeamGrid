@@ -1,4 +1,4 @@
-package com.teamgrid.fashhub.utils;
+package com.teamgrid.fashhub.utils.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;

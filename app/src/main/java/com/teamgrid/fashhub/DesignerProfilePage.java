@@ -1,6 +1,5 @@
 package com.teamgrid.fashhub;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,7 +15,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.teamgrid.fashhub.models.UserDetail;
-import com.teamgrid.fashhub.utils.CircleImageView;
+import com.teamgrid.fashhub.utils.views.CircleImageView;
 
 public class DesignerProfilePage extends AppCompatActivity implements View.OnClickListener {
 

@@ -238,7 +238,7 @@ public class SignInActivity extends AppCompatActivity implements
                                                                     @Override
                                                                     public void onDataChange(DataSnapshot dataSnapshot) {
                                                                         UserDetail userDetail = dataSnapshot.getValue(UserDetail.class);
-                                                                        Intent Login = new Intent(SignInActivity.this, DesignerListActivity.class);
+                                                                        Intent Login = new Intent(SignInActivity.this, Home.class);
                                                                         Login.putExtra("currentUser", userDetail);
                                                                         startActivity(Login);
                                                                         finish();
@@ -291,7 +291,7 @@ public class SignInActivity extends AppCompatActivity implements
                                     final FirebaseUser user = mFirebaseAuth.getCurrentUser();
                                     String authtoken = user.getUid();
 
-                                    Intent Login = new Intent(SignInActivity.this, DesignerListActivity.class);
+                                    Intent Login = new Intent(SignInActivity.this, Home.class);
                                     Login.putExtra("currentUser", new UserDetail("Anonymous","phone", "email", authtoken, "avaterUrl", false, "gender", "Guest", "address", "bio"));
                                     startActivity(Login);
                                     finish();

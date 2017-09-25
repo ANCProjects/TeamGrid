@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.teamgrid.fashhub.utils.CircleImageView
+        <com.teamgrid.fashhub.utils.views.CircleImageView
             android:id="@+id/user_photo"
             android:layout_width="100dp"
             android:layout_height="100dp"

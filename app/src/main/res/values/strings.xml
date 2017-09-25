@@ -13,14 +13,19 @@
     <string name="progress_downloading">Downloading…</string>
     <string name="progress_uploading">Uploading…</string>
 
-
     <string name="upload_success">Upload finished</string>
     <string name="upload_failure">Upload failed</string>
 
     <string name="download_success">Download finished</string>
     <string name="download_failure">Download failure</string>
 
-
     <string name="action_sign_out">Log out</string>
     <string name="action_search">Search</string>
+    <string name="about_us">About us The Android Nigeria Community (ANC) brings together a community of android developers to teach, learn and collaborate with each other to provide technological and business solutions to local (Africa) problems in order to enhance productivity and better lives through software development. Contact us Twitter: @androidngr Meetup: https://www.meetup.com/Android-Nigeria-Meetup/ Phone: 07033950328| 08132957589</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="Min">0</string>
+    <string name="Max">100</string>
 </resources>

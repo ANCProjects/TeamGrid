@@ -17,5 +17,7 @@
     <color name="secondary_text">#757575</color>
 
     <color name="text">#1d2cb1</color>
+    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#727272</color>
 
 </resources>
